@@ -1,5 +1,7 @@
 # Chatwall
 
+A simple chatting app with ability to add friends and chat to each other.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
 ## Development server
