@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmitForm(f)" #f="ngForm" fxLayout="column" fxLayoutGap="15px;">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <div fxFlex>
+      <img alt="Angular Logo" width=120px height=120px [src]="avatar | safeHtml">
+    </div>
+    <div fxFlex fxFlexAlign="center">
+      <p>Please upload picture smaller than 50kb and size smaller than 200px x 200px.</p>
+      <input type="file" id="filePicker"  (change)="onSelectImage($event)">
+    </div>
+  </div>
+  <p class="error" *ngIf="uploadError">{{uploadError}}</p>
+  <mat-form-field>
+    <input matInput placeholder="Name" ngModel name="name" required #nameInput="ngModel">
+    <mat-error *ngIf="nameInput.invalid">You must enter a value</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Email" ngModel name="email" email required #emailInput="ngModel">
+    <mat-error *ngIf="emailInput.invalid">{{getEmailError()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" ngModel name="dob" placeholder="Choose a date" required #dobInput="ngModel">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="dobInput.invalid">You must enter a DOB</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Address" ngModel name="address" required #addressInput="ngModel">
+    <mat-error *ngIf="nameInput.invalid">You must enter an address</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Hobbies" ngModel name="hobbies">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Enter your password" ngModel name="password" [type]="hide ? 'password' : 'text'" required minlength="6" #passwordInput="ngModel">
+    <mat-icon matSuffix (click)="hide = !hide" style="cursor: pointer">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    <mat-error *ngIf="passwordInput.invalid">{{getPasswordError()}}</mat-error>
+  </mat-form-field>
+  <p class="error" *ngIf="signupError">{{signupError}}</p>
+  <br>
+  <button mat-raised-button color="primary" type="submit" [disabled]="f.invalid">Sign Up</button>
+</form>

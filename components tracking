@@ -1,0 +1,18 @@
+Keeping track of project components
+
+Front end
+---------
+Angular Material (+CDK, animation)
+Angular flex-layout
+NGRX 6
+
+
+
+Back end
+---------
+Angular Universal
+Express
+Mongoose
+BCryptjs
+JsonWebToken
+Lodash
