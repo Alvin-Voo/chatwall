@@ -41,7 +41,7 @@ export function authReducer(state=initialState, action: AuthActions.AuthActions)
         signin_fail_message: null
       };
     case AuthActions.AFTER_LOGOUT:
-      console.log("reducer logout");
+      console.log("reducer after logout");
       return{
         ...state,
         token: null,
@@ -50,19 +50,16 @@ export function authReducer(state=initialState, action: AuthActions.AuthActions)
         authenticated : false
       };
     case AuthActions.SET_TOKEN:
-      console.log("set token reducer called");
+      const jwt_payload = action.payload.split('.')[1];
+      const obj_payload = JSON.parse(atob(jwt_payload));
+      console.log("set token reducer called",obj_payload);
       return{
         ...state,
         token: action.payload,
+        email: obj_payload['email'],
+        name: obj_payload['name'],
         authenticated: true
       };
-    case AuthActions.SET_MY_PROFILE:
-      console.log("set my profile reducer called");
-      return{
-        ...state,
-        email: action.payload.email,
-        name: action.payload.name,
-      }
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import { SearchDetailComponent } from './search-detail/search-detail.component';
 const searchRoutes: Routes = [
   {path: '', component: SearchComponent,
   children:[
-    {path: ':index', component: SearchDetailComponent}
+    {path: ':username/:index', component: SearchDetailComponent}
   ]}
 ]
 

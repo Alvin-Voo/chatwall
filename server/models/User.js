@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 
-const Message = require('./Message');
 
 let userSchema = mongoose.Schema({
   avatar:{
@@ -63,8 +62,7 @@ let userSchema = mongoose.Schema({
   },
   messageId:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Message',
-    required: true
+    ref: 'Message'
   },
   tokens:[
     {
@@ -96,7 +94,7 @@ userSchema.methods.toJSON = function(){//overwrite the toJSON method of mongoose
 
 userSchema.methods.generateAuthToken = function () {
   let user = this;//should be an object instance of the document instance
-  let token = jwt.sign({_id:user._id.toHexString()}, process.env.JWT_SECRET, { expiresIn: '1h' }).toString();
+  let token = jwt.sign({_id:user._id.toHexString(),name: user.name,email: user.email}, process.env.JWT_SECRET, { expiresIn: '1h' }).toString();
 
   user.tokens.push({token});
 
@@ -104,6 +102,16 @@ userSchema.methods.generateAuthToken = function () {
     return token;
   });
 
+}
+
+userSchema.methods.setMessageId = function(messageId){
+  let user = this;
+
+  return user.update({
+    $set:{
+      messageId
+    }
+  });
 }
 
 userSchema.methods.removeToken = function (token) {

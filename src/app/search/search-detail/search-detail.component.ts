@@ -27,6 +27,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       (params: Params) => {
         let index = Number(params['index']);
 
+        //clear this userInfo if index is null
+        if(index===null||index===undefined) return this.userInfo = null;
+
         this.friendRequestStr = 'Send friend\'s request';
         this.friendRequestToggle = false;
 

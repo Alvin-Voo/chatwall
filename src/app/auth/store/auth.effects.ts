@@ -79,28 +79,6 @@ export class AuthEffects{
   )
 
   @Effect()
-  setToken = this.actions$.ofType(AuthActions.SET_TOKEN).pipe(
-    switchMap(()=>{
-      return this.httpClient.get(SERVER_PATH+'/user/me',
-              {
-                  observe:'body',
-                  responseType:'json'
-              }).pipe(
-              catchError(err =>{
-                console.log("error setting token ",err);
-                return of(err);
-              })
-            );
-    }),
-    switchMap((resp)=>{
-      if (resp instanceof HttpErrorResponse){
-        console.log('setting profile error', resp.error);
-      }
-      return of({type:AuthActions.SET_MY_PROFILE, payload: {email: resp.user.email, name: resp.user.name}});
-    })
-  )
-
-  @Effect()
   logout = this.actions$.ofType(AuthActions.LOGOUT).pipe(
     switchMap(()=>{
       return this.httpClient.delete(SERVER_PATH+'/user/me/token',

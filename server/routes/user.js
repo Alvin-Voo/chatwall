@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Message = require('../models/Message');
+
 const {authenticate} = require('../middleware/authentication');
 
 const _ = require('lodash');
@@ -16,6 +18,10 @@ router.post('/',async (req,res)=>{
     await user.save();
     const token = await user.generateAuthToken();
     // res.header('x-auth',token).send(user)
+    //create new message document for this user
+    const message = await Message.createMessage(user);
+    await user.setMessageId(message);
+
     res.send({token});
   }catch(e){
     if(e.message.toLowerCase().includes('email')&&e.message.toLowerCase().includes('dup key'))
@@ -60,7 +66,9 @@ router.post('/search/sendfriendrequest/',authenticate, async(req,res)=>{
     await friend.save();
 
     //push message to Message collection in db
-    //send message back in response
+    // - push one message to this user, push another message to friend
+    Message.sendReqMessage(req.user, friend);
+    
     res.send({'user': friend});
   }catch(e){
     if(e.message) res.status(400).send(e.message);

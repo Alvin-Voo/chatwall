@@ -7,7 +7,7 @@
   </form>
   <div fxLayout="row" fxLayoutGap="15px" style="justify-content: center">
     <div fxLayout="column" fxLayoutGap="15px" style="flex-basis:350px">
-      <a class="result" [routerLink]="['/main/search/',i]" *ngFor="let user of (usersListState|async); index as i">
+      <a class="result" [routerLink]="['/main/search/',user.name,i]" *ngFor="let user of (usersListState|async); index as i">
         <mat-card>
           <img mat-card-image height=148px src={{user.avatar}}>
           <mat-card-content>
