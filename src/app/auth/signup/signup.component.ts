@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Observable } from 'rxjs';
 import { skipWhile, take } from 'rxjs/operators'; //tap is what-used-to be 'do'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +30,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   uploadError = '';
   signupError = '';
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
 
   ngOnInit() {
     this.authStateError = this.store.select('auth')//i dont want to take 1 coz I want this observation to keep continuing
@@ -37,31 +38,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     .subscribe(
       authState =>{
         if(authState.signup_fail_message){
-          console.log("signup signupError");
           this.signupError = authState.signup_fail_message;
         }
-
         if(authState.authenticated&&authState.token){
-          if(authState.token!==localStorage.getItem('token')){
-              console.log("setting token in signup");
-              localStorage.setItem('token',authState.token)
-          }
+              this.router.navigateByUrl("/main/search");
         }
       }
     )
-
-  //   this.store.select('auth').pipe(
-  //     skipWhile(
-  //       authState=> !authState.authenticated
-  //     ),
-  //     take(1)
-  //     //take once coz authenticated event should happen only once
-  //   ).subscribe(
-  //     //once authenticated
-  //     //redirect router
-  //     //store token to local storage
-  //     authState=>localStorage.setItem('token',authState.token)
-  //   );
   }
 
   onSelectImage(event){

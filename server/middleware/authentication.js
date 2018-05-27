@@ -10,7 +10,7 @@ let authenticate = (req, res, next) =>{
     req.token = token;
 
     next() //must pass next() in middleware to ensure the request continues
-  }).catch((e) => res.status(401).send());//not authorized
+  }).catch((e) => res.status(401).send('not authorized'));//not authorized
 
 }
 

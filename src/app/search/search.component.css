@@ -1,0 +1,17 @@
+a:link{
+  text-decoration: none
+}
+
+a.result{
+  max-width:148px;
+  margin-bottom: 10px;
+  cursor: pointer
+}
+
+form{
+  margin: 25px auto;
+}
+
+.mat-form-field{
+  width: 50em;
+}

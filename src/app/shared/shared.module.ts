@@ -1,27 +1,31 @@
 import { NgModule } from "@angular/core";
-import { MatButtonModule, MatDatepickerModule,
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+
+import { MatButtonModule, MatDatepickerModule, MatListModule,
   MatToolbarModule, MatInputModule,
   MatIconModule, MatFormFieldModule,
-  MatCardModule,
+  MatCardModule, MatTabsModule,
   MatNativeDateModule} from "@angular/material";
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations:[],
   exports:[
-    BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
+    HttpClientModule,
     FlexLayoutModule,
-    BrowserAnimationsModule,
     MatCardModule,
+    MatTabsModule,
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
     MatDatepickerModule,
+    MatListModule,
     MatNativeDateModule
   ],
   providers: []

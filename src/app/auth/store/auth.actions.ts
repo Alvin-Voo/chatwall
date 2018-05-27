@@ -6,7 +6,9 @@ export const SIGNIN_FAIL = 'SIGNIN_FAIL';
 export const SIGNUP = 'SIGNUP';
 export const SIGNIN = 'SIGNIN';
 export const LOGOUT = 'LOGOUT';
+export const AFTER_LOGOUT = 'AFTER_LOGOUT';
 export const SET_TOKEN = 'SET_TOKEN';
+export const SET_MY_PROFILE = 'SET_MY_PROFILE';
 
 export class SignupFail implements Action{
   readonly type = SIGNUP_FAIL;
@@ -33,11 +35,20 @@ export class Signin implements Action{
 export class Logout implements Action{
   readonly type = LOGOUT;
 }
+export class AfterLogout implements Action{
+  readonly type = AFTER_LOGOUT;
+}
+
 export class SetToken implements Action{
   readonly type = SET_TOKEN;
 
-  constructor(public payload: string){
-  }
+  constructor(public payload: string){}
 }
 
-export type AuthActions = Signin | Signup | Logout | SetToken | SignupFail | SigninFail;
+export class SetMyProfile implements Action{
+  readonly type = SET_MY_PROFILE;
+
+  constructor(public payload: {email: string, name: string}){}
+}
+
+export type AuthActions = Signin | Signup | Logout | AfterLogout | SetToken | SetMyProfile | SignupFail | SigninFail;

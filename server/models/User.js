@@ -5,10 +5,23 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 
+const Message = require('./Message');
+
 let userSchema = mongoose.Schema({
   avatar:{
     type:String,
-    trim:true
+    trim:true,
+    validate:{
+      validator: function(v){
+        const imageStrArr = v.split(',');
+        if(imageStrArr.length!=2) return false;
+        const dataStrTest = /^data:image\/\w{3,};base64$/i.test(imageStrArr[0]);
+        const dataTest = validator.isBase64(imageStrArr[1]);
+
+        return dataStrTest && dataTest;
+      },
+      message: '{VALUE} is not valid image'
+    }
   },
   name:{
     type:String,
@@ -27,6 +40,7 @@ let userSchema = mongoose.Schema({
     minlength:1,
     required:true,
     unique:true,
+    lowercase:true,
     validate:{
       validator: validator.isEmail, //function validator.isEmail()
       message: '{VALUE} is not a valid email'
@@ -47,6 +61,11 @@ let userSchema = mongoose.Schema({
     required:true,
     minlength:6
   },
+  messageId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Message',
+    required: true
+  },
   tokens:[
     {
       token:{
@@ -56,14 +75,23 @@ let userSchema = mongoose.Schema({
     }
   ],
   friends:[
-    {type: mongoose.Schema.Types.ObjectId, ref: 'User'} //refer to other user
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User' //refer to other user
+    }
+  ],
+  friends_requests:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User' //refer to other user
+    }
   ]
 })
 
 userSchema.methods.toJSON = function(){//overwrite the toJSON method of mongoose
   let user = this;
 
-  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends']);
+  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends','friends_requests']);
 }
 
 userSchema.methods.generateAuthToken = function () {
@@ -74,6 +102,17 @@ userSchema.methods.generateAuthToken = function () {
 
   return user.save().then(()=>{//return the promise with token
     return token;
+  });
+
+}
+
+userSchema.methods.removeToken = function (token) {
+  let user = this;
+
+  return user.update({
+    $pull:{
+      tokens: {token}
+    }
   });
 }
 
@@ -102,6 +141,17 @@ userSchema.statics.findByCredentials = function (email, password) {
       //if got user compare password with hash
       if(bcrypt.compareSync(password,user.password)) return user;
       else return Promise.reject('Password incorrect.');
+    }
+  )
+}
+
+userSchema.statics.findByEmailAndName = function (email, name) {
+  let User = this;
+
+  return User.findOne({email, name}).then(
+    (user)=>{
+      if(!user) return Promise.reject('User not found.');
+      return user;
     }
   )
 }

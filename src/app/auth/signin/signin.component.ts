@@ -5,6 +5,7 @@ import * as AuthActions from '../store/auth.actions';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { skipWhile, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +19,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   signinError = '';
   authStateError: Subscription;
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
 
   ngOnInit() {
     this.authStateError = this.store.select('auth')
@@ -26,29 +27,10 @@ export class SigninComponent implements OnInit, OnDestroy {
       authState =>{
         if(authState.signin_fail_message) this.signinError = authState.signin_fail_message;
         if(authState.authenticated&&authState.token){
-          if(authState.token!==localStorage.getItem('token')){
-              console.log("setting token in signin");
-              localStorage.setItem('token',authState.token)
-          }
+            this.router.navigateByUrl("/main/search");
         }
       }
     )
-
-    // this.store.select('auth').pipe(
-    //   skipWhile(
-    //     authState=> !authState.authenticated
-    //   ),
-    //   take(1)
-    //   //take once coz authenticated event should happen only once
-    // ).subscribe(
-    //   //once authenticated
-    //   //redirect router
-    //   //store token to local storage
-    //   authState=>{
-    //     console.log('signin sub called');
-    //     localStorage.setItem('token',authState.token)
-    //   }
-    // );
   }
 
   getEmailError(){

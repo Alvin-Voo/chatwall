@@ -1,6 +1,16 @@
-<mat-toolbar color='primary' fxLayout.xs="column" ngStyle.xs="height: 7em;">
-  <button mat-button routerLink=""><b>Chat-wall</b></button>
-  <span ngStyle.gt-xs="flex: 1 1 100%"></span>
-  <button mat-button routerLink="auth/signup">Sign up</button>
-  <button mat-button routerLink="auth/signin">Sign In</button>
-</mat-toolbar>
+<div fxLayout="column">
+  <mat-toolbar color='primary' fxLayout.xs="column" ngStyle.xs="height: 7em;">
+    <button mat-button routerLink=""><b>Chat-wall</b></button>
+    <span ngStyle.gt-xs="flex: 1 1 100%"></span>
+
+    <button mat-button *ngIf="authenticatedState|async; else notAuthenticated" (click)="onLogout()">Log Out</button>
+
+    <ng-template #notAuthenticated>
+      <button mat-button routerLink="auth/signup">Sign up</button>
+      <button mat-button routerLink="auth/signin">Sign In</button>
+    </ng-template>
+
+  </mat-toolbar>
+
+  <p fxFlexAlign="end" *ngIf="usernameState|async">Welcome, {{usernameState|async}}!</p>
+</div>

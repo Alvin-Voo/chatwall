@@ -3,15 +3,6 @@ form{
   margin: 0 auto;
 }
 
-p{
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 75%;
-}
-
-p.error{
-  color: #f44336;
-}
-
 .mat-raised-button{
   max-width:1.8em;
   align-self: flex-end;

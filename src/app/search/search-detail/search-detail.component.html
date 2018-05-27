@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutGap="15px">
+  <p class="error" *ngIf="!userInfo || !userInfo.email; else userFound">User not found.</p>
+
+  <ng-template #userFound>
+    <img src="{{userInfo.avatar}}" alt="profile picture" height="148px" width="148px">
+    <mat-list>
+      <mat-list-item><h4>Name: </h4> {{userInfo.name}}</mat-list-item>
+      <mat-list-item><h4>Email: </h4> {{userInfo.email}}</mat-list-item>
+      <mat-list-item><h4>DOB: </h4> {{convertToDateString(userInfo.dob)}}</mat-list-item>
+      <mat-list-item><h4>Address: </h4> {{userInfo.address}}</mat-list-item>
+      <mat-list-item><h4>Hobbies: </h4> {{userInfo.hobbies}}</mat-list-item>
+      <mat-list-item *ngIf="userInfo.friends.length>0"><h4>Friend(s): </h4>
+        <p *ngFor="let friend of userInfo.friends">{{friend.name}} </p>
+      </mat-list-item>
+    </mat-list>
+    <br>
+    <br>
+    <button mat-raised-button color="primary" [disabled]="friendRequestToggle" (click)="sendFriendRequest()">{{friendRequestStr}}</button>
+  </ng-template>
+</div>

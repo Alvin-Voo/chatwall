@@ -5,3 +5,24 @@
 app-signup {
   max-width: 600px;
 }
+
+app-search {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+app-search-detail {
+  flex-basis: 500px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+}
+
+p{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 75%;
+}
+
+p.error{
+  color: #f44336;
+}

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 const appRoutes: Routes=[
   {path: '', redirectTo: 'auth/signup', pathMatch: 'full'},
-  {path: '**', redirectTo: ''}
+  // {path: '**', redirectTo: '/'}
 ]
 
 @NgModule({
