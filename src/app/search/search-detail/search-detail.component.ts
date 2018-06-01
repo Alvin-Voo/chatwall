@@ -44,12 +44,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 take(1)
               ).subscribe(
                 (myemail: string)=>{
-
+                  //check if this user is me
                   if(this.userInfo.email===myemail) return this.disableFriendRequest('Eh?? Si moi!');
-
-                  const reqUserSent = this.userInfo.friends_requests.filter((user)=>{
-                    return user.email===myemail;
-                  })
+                  //check if this user's friend including me
+                  const alreadyFriend = this.userInfo.friends.filter((user)=>user.email===myemail)
+                  if(alreadyFriend.length>0)this.disableFriendRequest('Mon Ami(e)!!');
+                  //check if this user's friend requests has me
+                  const reqUserSent = this.userInfo.friends_requests.filter((user)=>user.email===myemail)
                   if(reqUserSent.length>0) this.disableFriendRequest('Friend\'s request sent');
                 }
               );

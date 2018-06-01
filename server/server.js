@@ -16,9 +16,9 @@ const app = express();
 
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
+const messageRouter = require('./routes/message');
 
 const mongoose = require('./db/mongoose');
-
 
 app.engine('html', ngUniversal.ngExpressEngine({//all html page rendering will be via this callback
   bootstrap: AppServerModuleNgFactory,
@@ -42,14 +42,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-function angularRouter(req, res){
-  // console.log("request: ");
-  // console.log(req);
-  // console.log("response: ");
-  // console.log(res);
-  res.render('index',{req,res});//req and res object need to be passed for express-engine rendering
-}
-
+app.use('/message', messageRouter);
 app.use('/user', userRouter);
 app.use('/', indexRouter);//--> root page is NOT served as a static file, but as Angular file
 

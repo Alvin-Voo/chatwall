@@ -10,7 +10,9 @@
       <mat-list-item><h4>Address: </h4> {{userInfo.address}}</mat-list-item>
       <mat-list-item><h4>Hobbies: </h4> {{userInfo.hobbies}}</mat-list-item>
       <mat-list-item *ngIf="userInfo.friends.length>0"><h4>Friend(s): </h4>
-        <p *ngFor="let friend of userInfo.friends">{{friend.name}} </p>
+        <mat-chip-list>
+          <mat-chip *ngFor="let friend of userInfo.friends" color="accent" selected="true">{{friend.name}}</mat-chip>
+        </mat-chip-list>
       </mat-list-item>
     </mat-list>
     <br>

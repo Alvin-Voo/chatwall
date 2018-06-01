@@ -4,14 +4,13 @@ import { HeaderComponent } from "./header/header.component";
 import { MainComponent } from "./main/main.component";
 import { CoreRoutingModule } from "./core-routing.module";
 import { FriendsComponent } from '../friends/friends.component';
-import { RequestComponent } from '../request/request.component';
+import { SocketService } from "../shared/socket.service";
 
 @NgModule({
   declarations:[
     HeaderComponent,
     MainComponent,
-    FriendsComponent,
-    RequestComponent
+    FriendsComponent
   ],
   imports:[
     CoreRoutingModule,
@@ -19,7 +18,8 @@ import { RequestComponent } from '../request/request.component';
   ],
   exports:[
     HeaderComponent
-  ]
+  ],
+  providers:[SocketService]
 
 })
 export class CoreModule {}

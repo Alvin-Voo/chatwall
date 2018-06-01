@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/app.reducers';
 import { AuthEffects } from './auth/store/auth.effects';
 import { SearchEffects } from './search/store/search.effects';
+import { MessageEffects } from './message/store/message.effects';
 
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
@@ -34,7 +35,7 @@ import { ServerInterceptor } from './shared/server.interceptor';
     AuthModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects,SearchEffects]),
+    EffectsModule.forRoot([AuthEffects,SearchEffects,MessageEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [

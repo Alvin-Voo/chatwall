@@ -6,6 +6,7 @@
 
 require('../server/config/config.js');
 const app = require('../server/server');
+const socket_app = require('../socket_server/socket_server');
 const debug = require('debug')('chatwall:server');
 const http = require('http');
 
@@ -21,11 +22,14 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+// create socket server
+const socket_server = new socket_app(server);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
+socket_server.startListening();
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

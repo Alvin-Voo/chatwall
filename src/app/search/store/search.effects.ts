@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 import * as SearchActions from './search.actions';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-
+import { User } from '../../models/user.model';
+import { SocketService } from '../../shared/socket.service';
 const SERVER_PATH = environment.server;
 
 @Injectable()
@@ -39,7 +40,7 @@ export class SearchEffects{
   @Effect()
   sendFriendRequest = this.actions$.ofType(SearchActions.SEND_FRIEND_REQUEST).pipe(
     map((action: SearchActions.SendFriendRequest) => action.payload),
-    switchMap((friendData: {email, name})=>{
+    switchMap((friendData: {email:string, name:string})=>{
       return this.httpClient.post(SERVER_PATH+'/user/search/sendfriendrequest',JSON.stringify(friendData),
               {
                 headers:{'Content-Type':'application/json'},
@@ -55,10 +56,14 @@ export class SearchEffects{
     switchMap((resp)=>{
       if(resp instanceof HttpErrorResponse){
         return of({type:SearchActions.SEARCH_FAIL, payload: resp['error']});
+      }else{
+        //call the socket service
+        const friend: User = resp['user'];
+        this.socketService.friendRequestSent({email:friend.email, name:friend.name});
+        return of({type:SearchActions.UPDATE_USER, payload: friend});
       }
-      return of({type:SearchActions.UPDATE_USER, payload: resp['user']});
     })
   )
 
-  constructor(private actions$: Actions, private httpClient: HttpClient){};
+  constructor(private actions$: Actions, private httpClient: HttpClient, private socketService: SocketService){};
 }

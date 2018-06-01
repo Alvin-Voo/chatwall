@@ -77,3 +77,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+//socket io client fix - https://github.com/angular/angular-cli/issues/8160#issuecomment-386153833
+ // Add global to window, assigning the value of window itself.
+(window as any).global = window;

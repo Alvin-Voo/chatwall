@@ -7,7 +7,8 @@ import { MatButtonModule, MatDatepickerModule, MatListModule,
   MatToolbarModule, MatInputModule,
   MatIconModule, MatFormFieldModule,
   MatCardModule, MatTabsModule,
-  MatNativeDateModule} from "@angular/material";
+  MatNativeDateModule,
+  MatChipsModule} from "@angular/material";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
@@ -26,6 +27,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatIconModule,
     MatDatepickerModule,
     MatListModule,
+    MatChipsModule,
     MatNativeDateModule
   ],
   providers: []

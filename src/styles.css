@@ -20,9 +20,9 @@ app-search-detail {
 
 p{
   font-family: Roboto,"Helvetica Neue",sans-serif;
-  font-size: 75%;
 }
 
 p.error{
+  font-size: 75%;
   color: #f44336;
 }

@@ -5,6 +5,7 @@ import * as AuthActions from '../../auth/store/auth.actions';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { skipWhile, take } from 'rxjs/operators';
+import { SocketService } from '../../shared/socket.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   authenticatedState: Observable<boolean>;
   usernameState: Observable<string>;
-  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router, private socketService: SocketService) { }
 
   ngOnInit() {
     this.authenticatedState = this.store.select('auth','authenticated');
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
       take(1)
     ).subscribe(
       (authenticated)=>{
-        console.log("redirect "+authenticated)
+        this.socketService.disconnect();
         this.router.navigateByUrl('/auth/signin');
       }
     );

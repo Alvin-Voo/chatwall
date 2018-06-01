@@ -124,6 +124,16 @@ userSchema.methods.removeToken = function (token) {
   });
 }
 
+userSchema.methods.acceptFriend = async function(friend){
+  let user = this;
+
+  user.friends.push(friend);
+  friend.friends.push(user);
+  await user.save();
+  await friend.save();
+
+}
+
 userSchema.statics.findByToken = function (token) {
   let User = this;//an object instance of Model
   let decoded;

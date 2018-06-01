@@ -1,0 +1,11 @@
+<div>
+  <mat-list>
+    <mat-list-item *ngFor="let msg of messagesState|async">
+      <p> {{convertDateToString(msg.created)}} - {{msg.content}}</p>
+      <button mat-raised-button color="primary" *ngIf="showActiveButton(msg)" (click)="onAcceptFriend(msg)">Accept</button>
+      <button mat-raised-button color="warn" *ngIf="showActiveButton(msg)" (click)="onRejectFriend(msg)">Reject</button>
+      <button mat-raised-button disabled *ngIf="showAcceptedButton(msg)">Accepted!</button>
+      <button mat-raised-button disabled *ngIf="showRejectedButton(msg)">Rejected!</button>
+    </mat-list-item>
+  </mat-list>
+</div>

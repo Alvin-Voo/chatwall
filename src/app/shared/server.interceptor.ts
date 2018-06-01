@@ -12,8 +12,6 @@ export class ServerInterceptor implements HttpInterceptor{
   constructor(private store: Store<fromApp.AppState>){}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Intercepted! ',req);
-
     return this.store.select('auth').pipe(
       take(1),
       switchMap((authState: fromApp.AppState['auth']) =>{
