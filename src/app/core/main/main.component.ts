@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
 import * as MessageActions from '../../message/store/message.actions';
 import { skipWhile, take } from 'rxjs/operators';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-main',
@@ -23,7 +24,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.socketSub = this.socketService.onNewMessage().subscribe(//active listening
       (messages)=>{
-        console.log("i got msg! ",messages);
         this.store.dispatch(new MessageActions.PushNewMessages(messages))
       }
       //when get that 1 new message, push message into message's store

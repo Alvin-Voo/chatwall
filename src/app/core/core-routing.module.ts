@@ -8,7 +8,7 @@ const mainRoutes: Routes=[
   {path: 'main', component: MainComponent,//need to take care IF i wan to lazy load this later
   children:[
     {path:'search', loadChildren: '../search/search.module#SearchModule'},
-    {path:'friends', component: FriendsComponent},
+    {path:'friends', loadChildren: '../friends/friends.module#FriendsModule'},
     {path:'inbox', loadChildren: '../message/message.module#MessageModule'}
   ]},
 ]

@@ -8,10 +8,16 @@ a.result{
   cursor: pointer
 }
 
+.searchresults{
+  height: 80vh;
+  width: 100%;
+  overflow: auto;
+}
+
 form{
-  margin: 25px auto;
+  margin: 2vh auto;
 }
 
 .mat-form-field{
-  width: 50em;
+  width: 60vw;
 }

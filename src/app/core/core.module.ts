@@ -3,14 +3,11 @@ import { SharedModule } from "../shared/shared.module";
 import { HeaderComponent } from "./header/header.component";
 import { MainComponent } from "./main/main.component";
 import { CoreRoutingModule } from "./core-routing.module";
-import { FriendsComponent } from '../friends/friends.component';
-import { SocketService } from "../shared/socket.service";
 
 @NgModule({
   declarations:[
     HeaderComponent,
-    MainComponent,
-    FriendsComponent
+    MainComponent
   ],
   imports:[
     CoreRoutingModule,
@@ -19,7 +16,7 @@ import { SocketService } from "../shared/socket.service";
   exports:[
     HeaderComponent
   ],
-  providers:[SocketService]
+  providers:[]
 
 })
 export class CoreModule {}

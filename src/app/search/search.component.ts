@@ -41,8 +41,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchErrorState = this.store.select('search','search_fail_message');
   }
 
-  convertToAge(unixTime){
-    const age = new Date(Date.now()).getFullYear() - new Date(unixTime).getFullYear();
+  convertToAge(date){
+    const age = new Date(Date.now()).getFullYear() - new Date(date).getFullYear();
     return age;
   }
 

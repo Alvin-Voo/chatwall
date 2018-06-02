@@ -1,7 +1,33 @@
-<mat-card>
-  <mat-card-header>
-    <img mat-card-avatar alt="profile picture" src="">
-    <mat-card-title>Alvin Voo</mat-card-title>
-    <mat-card-subtitle>32</mat-card-subtitle>
-  </mat-card-header>
-</mat-card>
+<div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center">
+  <div fxFlex="10vw" class="friendslist">
+    <p class="error" *ngIf="friendsErrorState">{{friendsErrorState|async}}</p>
+    <mat-card *ngFor="let friend of friendsListState|async"  [ngStyle]="{'background-color':friend.online?'lightgreen':'indianred'}">
+      <mat-card-header>
+        <img mat-card-avatar alt={{friend.name}} src={{friend.avatar}}>
+        <mat-card-title>{{friend.name}}</mat-card-title>
+        <mat-card-subtitle>{{convertToAge(friend.dob)}}</mat-card-subtitle>
+        <mat-card-subtitle><i>{{checkOnline(friend.online)}}</i></mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div fxFlex="0 1 60vw" class="chatarea" fxLayout="column" fxLayoutGap="15px">
+    <div class="chatmessages">
+      <p>Select an available friend to start chatting!</p>
+      <ol>
+        <li>test 1</li>
+        <li>test 1</li>
+        <li>test 1</li>
+      </ol>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="chatfooter">
+      <form  fxLayout="row">
+        <mat-form-field  fxFlex="1 0 auto">
+          <input matInput name="message" type="text" placeholder="Enter a message here" autocomplete="off">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+</div>

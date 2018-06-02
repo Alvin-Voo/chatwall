@@ -26,11 +26,11 @@ export function searchReducer(state=initialState, action: SearchActions.SearchAc
         search_fail_message: null
       }
     case(SearchActions.UPDATE_USER):
-      const index = state.usersList.findIndex((user)=>{
+      const updatedUsersList = [...state.usersList];
+      const index = updatedUsersList.findIndex((user)=>{
         return user.email===action.payload.email && user.name===action.payload.name
       });
-      const updatedUsersList = [...state.usersList];
-      updatedUsersList[index] = action.payload;
+      if(index>-1)updatedUsersList[index] = action.payload;
       return{
         ...state,
         usersList: updatedUsersList

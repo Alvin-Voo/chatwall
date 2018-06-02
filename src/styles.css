@@ -1,21 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
-app-signup {
-  max-width: 600px;
-}
-
 app-search {
-  max-width: 80%;
+  max-width: 80vw;
   margin: 0 auto;
-}
-
-app-search-detail {
-  flex-basis: 500px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 10px;
 }
 
 p{

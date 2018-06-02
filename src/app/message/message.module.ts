@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
 import { MessageComponent } from "./message.component";
-import { SocketService } from "../shared/socket.service";
 import { MessageRoutingModule } from "./message-routing.module";
 @NgModule({
   declarations:[
@@ -11,9 +10,7 @@ import { MessageRoutingModule } from "./message-routing.module";
     MessageRoutingModule,
     SharedModule
   ],
-  providers:[
-    SocketService
-  ]
+  providers:[]
 
 })
 export class MessageModule {}

@@ -1,0 +1,56 @@
+.friendslist{
+  text-align: right;
+  height: 70vh;
+  width: 100%;
+  overflow: auto;
+  padding: 2vw 0;
+}
+
+.chatarea{
+  height: 70vh
+}
+
+.chatmessages{
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chatmessages p{
+  text-align: center;
+}
+
+.chatmessages ol{
+  list-style-type: none;
+  padding: 1vw 1vh;
+}
+
+.chatfooter{
+  flex-shrink: 0;
+}
+
+.mat-raised-button{
+  margin: 1em;
+}
+
+mat-card{
+  /*display: inline-block;*/
+  padding: 8px;
+  border-radius: 6px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+mat-card-header{
+  display: inline-flex;
+}
+
+mat-card-title{
+  /*width: 3.8em;*/
+  word-wrap: break-word;
+  margin-bottom: 0.6em;
+}
+
+mat-card-subtitle{
+  margin-top: 0px;
+  margin-bottom: 8px;
+}

@@ -21,6 +21,8 @@ import {environment} from '../environments/environment';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerInterceptor } from './shared/server.interceptor';
+import { FriendsEffects } from './friends/store/friends.effects';
+import { SocketService } from './shared/socket.service';
 
 
 @NgModule({
@@ -35,11 +37,12 @@ import { ServerInterceptor } from './shared/server.interceptor';
     AuthModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects,SearchEffects,MessageEffects]),
+    EffectsModule.forRoot([AuthEffects,SearchEffects,MessageEffects, FriendsEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 
-
 let userSchema = mongoose.Schema({
   avatar:{
     type:String,
@@ -29,7 +28,7 @@ let userSchema = mongoose.Schema({
     required:true
   },
   dob:{
-    type:Number,
+    type:Date,
     required:true,
     default:Date.now
   },
@@ -60,6 +59,10 @@ let userSchema = mongoose.Schema({
     required:true,
     minlength:6
   },
+  online:{
+    type:Boolean,
+    default:false
+  },
   messageId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
@@ -89,7 +92,8 @@ let userSchema = mongoose.Schema({
 userSchema.methods.toJSON = function(){//overwrite the toJSON method of mongoose
   let user = this;
 
-  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends','friends_requests']);
+  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends','friends_requests','online']);
+  //return _.omit(user, ['password','messageId','_id','tokens'])
 }
 
 userSchema.methods.generateAuthToken = function () {
@@ -172,6 +176,16 @@ userSchema.statics.findByEmailAndName = function (email, name) {
       return user;
     }
   )
+}
+
+userSchema.statics.updateUserOnlineStatus = async function (id, status){
+  let User = this;
+
+  const user = await User.findById(id).populate({path:'friends',select:'name email',match:{online:true}});
+  user.online = status;
+  await user.save();
+
+  return user;//return a list of online friends
 }
 
 userSchema.pre('save', function(next){

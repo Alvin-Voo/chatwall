@@ -61,10 +61,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  convertToDateString(unix:number){
-    let newDob = new Date();
-    newDob.setTime(unix);
-    return newDob.toDateString();
+  convertToDateString(date){
+    return (new Date(date)).toDateString();
   }
 
   sendFriendRequest(){

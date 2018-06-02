@@ -6,6 +6,7 @@ import { Store } from "@ngrx/store";
 import * as fromApp from '../store/app.reducers';
 import { take } from "rxjs/operators";
 import { Message } from "../models/message.model";
+import { User } from "../models/user.model";
 
 const SERVER_URL = environment.server;
 
@@ -43,10 +44,6 @@ export class SocketService{
     }).bind(this));// this keyword for global scope is not within the scope of a local callback
   }
 
-  public send(message: string){
-
-  }
-
   public friendAccepted(friend: {email:string, name:string}){
     this.socket.emit('friendAccepted',friend);
   }
@@ -63,6 +60,14 @@ export class SocketService{
     return new Observable<Message[]>(
       observer =>{
         this.socket.on('newMessage',(data: Message[])=> observer.next(data));
+      }
+    )
+  }
+
+  public onFriendOnlineStatusChanged(): Observable<User>{
+    return new Observable<User>(
+      observer => {
+        this.socket.on('friendOnlineStatus',(data: User)=> observer.next(data));
       }
     )
   }

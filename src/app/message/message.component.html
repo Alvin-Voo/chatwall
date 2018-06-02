@@ -1,4 +1,4 @@
-<div>
+<div class="inbox">
   <mat-list>
     <mat-list-item *ngFor="let msg of messagesState|async">
       <p> {{convertDateToString(msg.created)}} - {{msg.content}}</p>

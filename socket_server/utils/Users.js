@@ -57,6 +57,10 @@ class Users{
     return this.users.splice(ind_userTobeDel,1)[0];
   }
 
+  getAllUsers(){
+    return this.users;
+  }
+
   toString(){
     return this.users;
   }

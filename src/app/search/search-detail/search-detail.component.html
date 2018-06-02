@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="15px">
+<div fxLayout="column" fxLayoutGap="15px" class="searchdetail">
   <p class="error" *ngIf="!userInfo || !userInfo.email; else userFound">User not found.</p>
 
   <ng-template #userFound>

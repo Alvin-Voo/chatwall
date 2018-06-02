@@ -17,6 +17,7 @@ const app = express();
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const messageRouter = require('./routes/message');
+const friendsRouter = require('./routes/friends');
 
 const mongoose = require('./db/mongoose');
 
@@ -42,6 +43,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/friends', friendsRouter);
 app.use('/message', messageRouter);
 app.use('/user', userRouter);
 app.use('/', indexRouter);//--> root page is NOT served as a static file, but as Angular file

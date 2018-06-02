@@ -2,3 +2,15 @@
   font-size: 75%;
   margin-left: 5px;
 }
+
+.inbox{
+  max-width: 80vw;
+  margin: 0 auto;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.mat-list .mat-list-item{
+  height: auto;
+  line-height: 1.6;
+}
