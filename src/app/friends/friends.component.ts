@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store';
 import { User } from '../models/user.model';
 
 import * as fromApp from '../store/app.reducers';
+import * as fromChats from './chats/store/chats.reducers';
 import * as FriendsActions from './store/friends.actions';
+import * as ChatsActions from './chats/store/chats.actions';
+
 import { Observable, Subscription } from 'rxjs';
 import { SocketService } from '../shared/socket.service';
 
@@ -16,9 +19,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   friendsListState: Observable<User[]>;
   friendsErrorState: Observable<String>;
-  userSub: Subscription;
+  private userSub: Subscription;
 
-  constructor(private store: Store<fromApp.AppState>, private socketService: SocketService) { }
+  constructor(private store: Store<fromChats.FeatureState>, private socketService: SocketService) { }
 
   ngOnInit() {
     this.store.dispatch(new FriendsActions.GetFriendsList());
@@ -44,6 +47,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   checkOnline(online){
     if(online)return 'online';
     else return 'offline';
+  }
+
+  onFriendSelected(friend: User){
+    this.store.dispatch(new ChatsActions.SelectFriend({email:friend.email,name:friend.name,online:friend.online}));
   }
 
   ngOnDestroy(){

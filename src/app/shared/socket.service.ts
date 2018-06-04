@@ -72,6 +72,10 @@ export class SocketService{
     )
   }
 
+  public sendChatMessageTo(friend: {email:string, name:string}, chatItem){
+    this.socket.emit('sendChatMessageTo',friend,chatItem);
+  }
+
   public disconnect(){
     this.socket.disconnect();
   }

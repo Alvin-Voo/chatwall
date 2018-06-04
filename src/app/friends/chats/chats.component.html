@@ -1,0 +1,21 @@
+<div class="chatarea" fxLayout="column" fxLayoutGap="1vh">
+  <div class="chatmessages">
+    <p>{{messageToUser}}</p>
+    <ol>
+      <li *ngFor="let chat of (curChatList|async)" [ngStyle]="{'text-align':chat.direction==='FROM'?'right':'left'}">
+        <h4>{{userName}}:</h4>
+        <span>{{chat.content}}</span>
+      </li>
+    </ol>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="chatfooter">
+    <form (ngSubmit)="onSendChatMessage(f)" #f="ngForm" fxLayout="row">
+      <mat-form-field  fxFlex="1 0 auto">
+        <input matInput ngModel name="chatMessage" type="text" placeholder="Enter a message here" autocomplete="off" emptyStringCheck #chatInput="ngModel">
+        <mat-error *ngIf="chatInput.invalid">Please enter proper value.</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!friendAvailable||chatInput.invalid">Send</button>
+    </form>
+  </div>
+</div>

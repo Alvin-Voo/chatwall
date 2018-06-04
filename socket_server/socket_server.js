@@ -3,6 +3,7 @@ const socketioJwt = require('socketio-jwt');
 const {Users, User} = require('./utils/Users');
 const MessageDB = require('../server/models/Message');
 const UserDB = require('../server/models/User');
+const ChatDB = require('../server/models/Chat');
 const users = new Users();
 
 class SocketServer{
@@ -88,6 +89,25 @@ class SocketServer{
           socket.broadcast.to(friend_new.getSocketId()).emit('newMessage',friend_newmsg);
         }
       }
+
+      //--------------------------------------//
+
+      socket.on('sendChatMessageTo', async(friend,chatItem)=>{
+        const userId = users.getUser(socket.id).getUserId();
+        let onlinefriend = users.getUserByEmailAndName(friend.email,friend.name);
+        let friendId = onlinefriend.getUserId();
+
+        if(!onlinefriend){//not currently online - highly unlikely will encounter this, cuz front end will block
+          const friendDB = await UserDB.findByEmailAndName(friend.email,friend.name);
+          friendId = friendDB._id.toHexString();
+        }else{
+          //send chat message to friend
+          socket.broadcast.to(onlinefriend.getSocketId()).emit('newChatMessage',chatItem);
+        }
+
+        //store message in both this user and friend's chat db
+        await ChatDB.storeChatMessage(userId,friendId,chatItem);
+      })
 
     });
   }

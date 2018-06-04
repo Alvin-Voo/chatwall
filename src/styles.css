@@ -1,11 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-app-search {
-  max-width: 80vw;
-  margin: 0 auto;
-}
-
 p{
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }

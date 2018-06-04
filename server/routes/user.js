@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Message = require('../models/Message');
+const Chat = require('../models/Chat');
 
 const {authenticate} = require('../middleware/authentication');
 
@@ -36,7 +37,7 @@ router.get('/me', authenticate, (req,res)=>{ //authenticate is a callback functi
 })
 
 router.get('/search/:name',authenticate, async (req,res)=>{
-  let name = _.toString(req.params.name).trim();//convert the input to string for safety
+  let name = _.escape(req.params.name).trim();//convert the input to string for safety
   if(name){//only if its not undefined, null or empty
     try{
       const re = new RegExp('^'+name,'i');
@@ -68,7 +69,7 @@ router.post('/search/sendfriendrequest/',authenticate, async(req,res)=>{
     //push message to Message collection in db
     // - push one message to this user, push another message to friend
     Message.sendReqMessage(req.user, friend);
-    
+
     res.send({'user': friend});
   }catch(e){
     if(e.message) res.status(400).send(e.message);

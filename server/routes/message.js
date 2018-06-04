@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
 const User = require('../models/User');
+const Chat = require('../models/Chat');
 const {authenticate} = require('../middleware/authentication');
 
 const _ = require('lodash');
@@ -11,8 +12,8 @@ const _ = require('lodash');
 router.get('/getallmessages',authenticate, async(req,res)=>{
   try{
     //check and only update those msg items which are status NEW to SENT
+    //status NEW has not much practical use, its only for server to keep track of
     const msgArray = await Message.updateMessageStatus(req.user, 'NEW', 'SENT');
-    //client should get only msg with READ and SENT statuses. NEW is only for server to keep track of.
     res.send({msgArray});
   }catch(e){
     if(e.message) res.status(400).send(e.message);
@@ -37,7 +38,13 @@ router.patch('/acceptfriend',authenticate, async(req,res)=>{
 
     //fill in each other's friend's array with each other
     await req.user.acceptFriend(friend);
+    //create a new chat document EACH for this user-friend pair
+    const chat_pair = await Chat.createChat(req.user,friend);
+    await req.user.setChatId(chat_pair.userChat);
+    await friend.setChatId(chat_pair.friendChat);
+
     const msgArray = await Message.sendAcceptMessage(req.user,friend);
+
     res.send({msgArray});
   }catch(e){
     if(e.message) res.status(400).send(e.message);

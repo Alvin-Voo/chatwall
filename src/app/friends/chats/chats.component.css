@@ -1,0 +1,31 @@
+.chatarea{
+  height: 75vh
+}
+
+.chatmessages{
+  flex-grow: 1;
+  overflow-y: auto;
+  border: 1px solid rgba(0,0,0,0.4);
+}
+
+.chatmessages p{
+  text-align: center;
+  font-size: 80%;
+}
+
+.chatmessages ol{
+  list-style-type: none;
+  padding: 1vw 1vh;
+}
+
+.chatmessages ol > li{
+  line-height: 0.1;
+}
+
+.chatfooter{
+  flex-shrink: 0;
+}
+
+.mat-raised-button{
+  margin: 1em;
+}

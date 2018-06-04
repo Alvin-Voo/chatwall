@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const arrayUniquePlugin = require('mongoose-unique-array');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
@@ -67,6 +68,12 @@ let userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
   },
+  chatId:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Chat'
+    }
+  ],
   tokens:[
     {
       token:{
@@ -78,13 +85,13 @@ let userSchema = mongoose.Schema({
   friends:[
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User' //refer to other user
+      ref: 'User'
     }
   ],
   friends_requests:[
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User' //refer to other user
+      ref: 'User'
     }
   ]
 })
@@ -114,6 +121,16 @@ userSchema.methods.setMessageId = function(messageId){
   return user.update({
     $set:{
       messageId
+    }
+  });
+}
+
+userSchema.methods.setChatId = function(chatId){
+  let user = this;
+
+  return user.update({
+    $push:{
+      chatId
     }
   });
 }
@@ -198,4 +215,5 @@ userSchema.pre('save', function(next){
   next();
 })
 
+// userSchema.plugin(arrayUniquePlugin);
 module.exports = mongoose.model('User',userSchema);
