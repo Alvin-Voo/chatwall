@@ -33,17 +33,14 @@ import { SocketService } from './shared/socket.service';
     BrowserModule.withServerTransition({appId: 'my-app'}),
     FlexLayoutModule,
     BrowserAnimationsModule,
-    CoreModule,
-    AuthModule,
     AppRoutingModule,
+    AuthModule,
+    CoreModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects,SearchEffects,MessageEffects, FriendsEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
-    SocketService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

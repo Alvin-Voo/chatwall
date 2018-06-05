@@ -7,6 +7,7 @@ import * as fromApp from '../store/app.reducers';
 import { take } from "rxjs/operators";
 import { Message } from "../models/message.model";
 import { User } from "../models/user.model";
+import { Chat } from "../models/chat.model";
 
 const SERVER_URL = environment.server;
 
@@ -68,6 +69,14 @@ export class SocketService{
     return new Observable<User>(
       observer => {
         this.socket.on('friendOnlineStatus',(data: User)=> observer.next(data));
+      }
+    )
+  }
+
+  public onNewChatMessageReceived(): Observable<Chat>{
+    return new Observable<Chat>(
+      observer=>{
+        this.socket.on('newChatMessageReceived',(data: Chat)=> observer.next(data));
       }
     )
   }

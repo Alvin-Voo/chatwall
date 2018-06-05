@@ -78,4 +78,21 @@ chatSchema.statics.storeChatMessage = async function(userId, friendId, chatItem)
   );
 }
 
+chatSchema.statics.readAllChatsByFriend = async function(user, friend){
+  let Chat = this;
+  //get the chat and update the status to 'read'
+  const chat = await Chat.findOneAndUpdate({userId: user, friendId: friend},
+    {
+      $set:{
+        "status":'READ'
+      }
+    },
+    {
+      "new": true
+    }
+  );
+
+  return chat;
+}
+
 module.exports = mongoose.model('Chat',chatSchema);

@@ -8,12 +8,14 @@ export interface FeatureState extends fromApp.AppState{
 
 export interface State{
   friendSelected: {email: string, name: string, online:boolean},
-  curChatList: Chat[]
+  curChatList: Chat[],
+  read_chat_fail: string
 }
 
 const initialState: State ={
   friendSelected: null,
-  curChatList: new Array<Chat>()
+  curChatList: new Array<Chat>(),
+  read_chat_fail: null
 }
 
 export function chatsReducer(state=initialState, action: ChatsActions.ChatsActions){
@@ -23,11 +25,22 @@ export function chatsReducer(state=initialState, action: ChatsActions.ChatsActio
         ...state,
         friendSelected: action.payload
       }
-    case(ChatsActions.UPDATE_CUR_CHAT_ARRAY):
+    case(ChatsActions.STORE_CHAT_ARRAY):
+      return{
+        ...state,
+        curChatList: action.payload,
+        read_chat_fail: null
+      }
+    case(ChatsActions.UPDATE_CHAT_ARRAY):
       const newChatList = [...state.curChatList, action.payload];
       return{
         ...state,
         curChatList: newChatList
+      }
+    case(ChatsActions.READ_CHAT_FAIL):
+      return{
+        ...state,
+        read_chat_fail: action.payload
       }
     default:
       return state;

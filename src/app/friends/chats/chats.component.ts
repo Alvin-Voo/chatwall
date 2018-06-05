@@ -51,7 +51,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
    const newChatItem = {content:chat,created:new Date(Date.now()),direction:'TO'};
    //push this chat to cur chat state
-   this.store.dispatch(new ChatsActions.UpdateCurChatArray(newChatItem));
+   this.store.dispatch(new ChatsActions.UpdateChatArray(newChatItem));
 
    if(this.friendSelected.online)
     this.socketService.sendChatMessageTo({email:this.friendSelected.email,name:this.friendSelected.name},newChatItem);

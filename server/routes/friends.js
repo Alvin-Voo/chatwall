@@ -20,12 +20,15 @@ router.get('/getallfriends',authenticate, async (req,res)=>{
   }
 });
 
-router.get('/readallchats/:friend',authenticate, async(req,res)=>{
+router.get('/readallchats/:friendemail/:friendname',authenticate, async(req,res)=>{
   try{
-    let friend = JSON.parse(_.escape(req.params.friend).trim());//convert the input to string for safety
-    if(!friend) throw new Error('invalid friend details');
-    //expecting email and name in friend object
+    let email = _.escape(req.params.friendemail).trim();//convert the input to string for safety
+    let name = _.escape(req.params.friendname).trim();//convert the input to string for safety
 
+    const friend = await User.findByEmailAndName(email,name);
+    const chat = await Chat.readAllChatsByFriend(req.user,friend);
+
+    res.send({chat});
   }catch(e){
     if(e.message) res.status(400).send(e.message);
     else res.status(400).send(e);

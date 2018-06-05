@@ -102,7 +102,7 @@ class SocketServer{
           friendId = friendDB._id.toHexString();
         }else{
           //send chat message to friend
-          socket.broadcast.to(onlinefriend.getSocketId()).emit('newChatMessage',chatItem);
+          socket.broadcast.to(onlinefriend.getSocketId()).emit('newChatMessageReceived',{...chatItem,direction:'FROM'});
         }
 
         //store message in both this user and friend's chat db
