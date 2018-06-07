@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../store/app.reducers';
+import * as fromMessage from './store/message.reducers';
 import * as MessageActions from './store/message.actions';
 import { skipWhile, take } from 'rxjs/operators';
 import { Message } from '../models/message.model';
@@ -15,7 +15,7 @@ export class MessageComponent implements OnInit {
 
   messagesState: Observable<Message[]>;
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromMessage.FeatureState>) { }
 
   ngOnInit() {
     console.log('message component init');

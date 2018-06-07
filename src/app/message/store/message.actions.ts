@@ -8,6 +8,7 @@ export const PUSH_NEW_MESSAGES = 'PUSH_NEW_MESSAGES';
 export const GET_MESSAGES_FAIL = 'GET_MESSAGES_FAIL';
 export const ACCEPT_FRIEND = 'ACCEPT_FRIEND';
 export const REJECT_FRIEND = 'REJECT_FRIEND';
+export const CLEAR_STORE = 'CLEAR_STORE';
 
 export class FetchAllMessages implements Action{
   readonly type = FETCH_ALL_MESSAGES;
@@ -47,4 +48,9 @@ export class RejectFriend implements Action{
   constructor(public payload: {email:string, name:string}){}
 }
 
-export type MessageActions = FetchAllMessages | ReadAllMessages | StoreAllMessages | PushNewMessages | GetMessagesFail | AcceptFriend | RejectFriend;
+export class ClearStore implements Action{
+  readonly type = CLEAR_STORE;
+
+}
+
+export type MessageActions = FetchAllMessages | ReadAllMessages | StoreAllMessages | PushNewMessages | GetMessagesFail | AcceptFriend | RejectFriend | ClearStore;

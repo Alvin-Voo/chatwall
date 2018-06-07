@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducers';
 import * as AuthActions from '../../auth/store/auth.actions';
+import * as FriendsActions from '../../friends/store/friends.actions';
+import * as ChatsActions from '../../friends/chats/store/chats.actions';
+import * as SearchActions from '../../search/store/search.actions';
+import * as MessageActions from '../../message/store/message.actions';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { skipWhile, take } from 'rxjs/operators';
@@ -34,6 +38,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigateByUrl('/auth/signin');
       }
     );
+
+    //clear all the stores
+    this.store.dispatch(new FriendsActions.ClearStore());
+    this.store.dispatch(new ChatsActions.ClearStore());
+    this.store.dispatch(new SearchActions.ClearStore());
+    this.store.dispatch(new MessageActions.ClearStore());
   }
 
 }

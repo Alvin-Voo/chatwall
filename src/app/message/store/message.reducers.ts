@@ -1,5 +1,10 @@
 import * as MessageActions from './message.actions';
+import * as fromApp from '../../store/app.reducers';
 import { Message } from '../../models/message.model';
+
+export interface FeatureState extends fromApp.AppState{
+  message: State;
+}
 
 export interface State{
   messages: Message[];
@@ -29,6 +34,11 @@ export function messageReducer(state=initialState, action: MessageActions.Messag
       return{
         ...state,
         getMessagesFailure: action.payload
+      }
+    case MessageActions.CLEAR_STORE:
+      return{
+        ...state,
+        ...initialState
       }
     default:
       return state;

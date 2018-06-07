@@ -1,5 +1,10 @@
 import * as FriendsActions from './friends.actions';
+import * as fromApp from '../../store/app.reducers';
 import { User } from '../../models/user.model';
+
+export interface FeatureState extends fromApp.AppState{
+  friends: State;
+}
 
 export interface State{
   friendsList: User[];
@@ -39,6 +44,11 @@ export function friendsReducer(state=initialState, action: FriendsActions.Friend
       return{
         ...state,
         friendsList: [...statusList]
+      }
+    case(FriendsActions.CLEAR_STORE):
+      return{
+        ...state,
+        ...initialState
       }
     default:
       return state;

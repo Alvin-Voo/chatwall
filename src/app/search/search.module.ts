@@ -4,6 +4,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SearchRoutingModule } from "./search-routing.module";
 import { SearchComponent } from "./search.component";
 import { SearchDetailComponent } from './search-detail/search-detail.component';
+import { searchReducer } from './store/search.reducers';
+import { SearchEffects } from './store/search.effects';
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
 
 @NgModule({
   declarations:[
@@ -13,9 +17,10 @@ import { SearchDetailComponent } from './search-detail/search-detail.component';
   imports:[
     SearchRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('search',searchReducer),
+    EffectsModule.forFeature([SearchEffects])
   ]
-
 })
 
 export class SearchModule {}

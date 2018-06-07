@@ -5,7 +5,8 @@ export const GET_FRIENDS_LIST = 'GET_FRIENDS_LIST';
 export const STORE_FRIENDS_LIST = 'STORE_FRIENDS_LIST';
 export const GET_FRIENDS_FAIL = 'GET_FRIENDS_FAIL';
 export const UPDATE_FRIEND_ONLINE_STATUS = 'UPDATE_FRIEND_ONLINE_STATUS';
-export const UPDATE_FRIEND_CHAT_STATUS = 'UPDATE_FRIEND_CHAT_STATUS'
+export const UPDATE_FRIEND_CHAT_STATUS = 'UPDATE_FRIEND_CHAT_STATUS';
+export const CLEAR_STORE = 'CLEAR_STORE';
 
 export class GetFriendsList implements Action{
   readonly type = GET_FRIENDS_LIST;
@@ -35,4 +36,9 @@ export class UpdateFriendChatStatus implements Action{
   constructor(public payload: {email:string,name:string,status:string}){}
 }
 
-export type FriendsActions = GetFriendsList | StoreFriendsList | GetFriendsFail | UpdateFriendOnlineStatus | UpdateFriendChatStatus;
+export class ClearStore implements Action{
+  readonly type = CLEAR_STORE;
+
+}
+
+export type FriendsActions = GetFriendsList | StoreFriendsList | GetFriendsFail | UpdateFriendOnlineStatus | UpdateFriendChatStatus | ClearStore;

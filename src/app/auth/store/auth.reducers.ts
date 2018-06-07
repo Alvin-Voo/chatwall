@@ -44,10 +44,7 @@ export function authReducer(state=initialState, action: AuthActions.AuthActions)
       console.log("reducer after logout");
       return{
         ...state,
-        token: null,
-        email: null,
-        name: null,
-        authenticated : false
+        ...initialState
       };
     case AuthActions.SET_TOKEN:
       const jwt_payload = action.payload.split('.')[1];

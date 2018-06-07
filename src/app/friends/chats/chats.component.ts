@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, QueryList, ElementRef, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromChats from './store/chats.reducers';
 import * as ChatsActions from './store/chats.actions';
@@ -15,7 +15,7 @@ import { MatListItem, MatList } from '@angular/material';
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.css']
 })
-export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ChatsComponent implements OnInit, OnDestroy {
   messageToUser='Select an available friend to start chatting!';
   friendAvailable = false;
   curChatList: Observable<Chat[]>;
@@ -29,9 +29,7 @@ export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatmessages' ,{read: ElementRef}) chatList: ElementRef;
 
   // getting a reference to the items/messages within the list
-  @ViewChildren(MatListItem, { read: ElementRef }) chatListItems: QueryList<MatListItem>;
-
-  scrollTop = 0;
+  // @ViewChildren(MatListItem, { read: ElementRef }) chatListItems: QueryList<MatListItem>;
 
   constructor(private store: Store<fromChats.FeatureState>, private socketService: SocketService, private renderer: Renderer2) {}
 
@@ -53,6 +51,7 @@ export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.messageToUser = `${friendSelected.name} is currently offline.`
           this.friendAvailable = false;
         }
+        this.scrollToBottom();
       }
     );
 
@@ -62,6 +61,7 @@ export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
         //if a friend is selected and there's message from the selected friend, update the chat array
         if(this.friendSelected&&this.friendSelected.email===chatItem.email&&this.friendSelected.name===chatItem.name){
           this.store.dispatch(new ChatsActions.UpdateChatArray(chatItem));
+          this.scrollToBottom();
         }else
           this.store.dispatch(new FriendsActions.UpdateFriendChatStatus({email:chatItem.email, name:chatItem.name, status: 'NEW'}));
         //else update the 'new chat status' for this friend
@@ -69,18 +69,23 @@ export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
-  ngAfterViewInit(){
-    this.chatListItems.changes.subscribe(
-      (ele) => {
-        const parent = this.renderer.parentNode(ele.first.nativeElement);
-        console.log('ele parent ',parent);
-        const divEle : HTMLDivElement = this.chatList.nativeElement//this may crap in SSR
-        console.log('chatlist change  ', divEle.scrollHeight, ' : ', divEle.scrollWidth );
+  // ngAfterViewInit(){
+  //   this.chatListItems.changes.subscribe(
+  //     (ele) => {
+  //       const parent = this.renderer.parentNode(ele.first.nativeElement);
+  //       console.log('ele parent ',parent);
+  //     }
+  //   )
+  // }
 
-        // this.getMatList.setScrollTop(realscr);
-        this.renderer.setProperty(divEle,'scrollTop',divEle.scrollHeight);
-      }
-    )
+  private scrollToBottom(){
+    //needs some delay in getting the real scroll height value
+    setTimeout(()=>{
+      const divEle : HTMLDivElement = this.chatList.nativeElement//this may crap in SSR
+      console.log('chatlist change  ', divEle.scrollHeight, ' : ', divEle.scrollWidth );
+      // this.getMatList.setScrollTop(realscr);
+      this.renderer.setProperty(divEle,'scrollTop',divEle.scrollHeight);
+    },200);
   }
 
   onSendChatMessage(myForm: NgForm){
@@ -94,6 +99,7 @@ export class ChatsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.socketService.sendChatMessageTo({email:this.friendSelected.email,name:this.friendSelected.name},newChatItem);
 
    myForm.reset();
+   this.scrollToBottom();
   }
 
   ngOnDestroy(){

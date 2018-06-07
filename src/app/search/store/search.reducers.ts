@@ -1,5 +1,10 @@
 import * as SearchActions from './search.actions';
+import * as fromApp from '../../store/app.reducers';
 import { User } from '../../models/user.model';
+
+export interface FeatureState extends fromApp.AppState{
+  search: State;
+}
 
 export interface State{
   usersList: User[];
@@ -39,6 +44,11 @@ export function searchReducer(state=initialState, action: SearchActions.SearchAc
       return{
         ...state,
         search_fail_message: action.payload
+      }
+    case(SearchActions.CLEAR_STORE):
+      return{
+        ...state,
+        ...initialState
       }
     default:
       return state;

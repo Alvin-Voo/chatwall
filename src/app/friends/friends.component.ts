@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy, Renderer2, ViewChildren, QueryList, Eleme
 import { Store } from '@ngrx/store';
 import { User } from '../models/user.model';
 
-import * as fromApp from '../store/app.reducers';
-import * as fromChats from './chats/store/chats.reducers';
+import * as fromFriends from './store/friends.reducers';
 import * as FriendsActions from './store/friends.actions';
 import * as ChatsActions from './chats/store/chats.actions';
 
@@ -23,7 +22,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   prev_selected_matCard: ElementRef; //Assign with type ElementRef ok, but don't access the nativeElement
 
-  constructor(private store: Store<fromChats.FeatureState>, private socketService: SocketService, private renderer: Renderer2) { }
+  constructor(private store: Store<fromFriends.FeatureState>, private socketService: SocketService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.store.dispatch(new FriendsActions.GetFriendsList());
@@ -53,7 +52,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   onFriendSelected(friend: User,event){
-    console.log('selected:',event,' ',event.target);
+    // console.log('selected:',event,' ',event.target);
     const matCard = this.getToMatCardRootEle(event.target);
     if(matCard){
       if(this.prev_selected_matCard) this.renderer.removeStyle(this.prev_selected_matCard,'border');

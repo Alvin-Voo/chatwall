@@ -1,8 +1,8 @@
 import * as ChatsActions from './chats.actions';
-import * as fromApp from '../../../store/app.reducers';
+import * as fromFriends from '../../store/friends.reducers';
 import { Chat } from '../../../models/chat.model';
 
-export interface FeatureState extends fromApp.AppState{
+export interface FeatureState extends fromFriends.FeatureState{
   chats: State;
 }
 
@@ -50,6 +50,11 @@ export function chatsReducer(state=initialState, action: ChatsActions.ChatsActio
       return{
         ...state,
         read_chat_fail: action.payload
+      }
+    case(ChatsActions.CLEAR_STORE):
+      return{
+        ...state,
+        ...initialState
       }
     default:
       return state;

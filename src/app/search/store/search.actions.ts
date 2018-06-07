@@ -7,6 +7,7 @@ export const UPDATE_USERS_LIST = 'UPDATE_USERS_LIST';
 export const SEARCH_FAIL = 'SEARCH_FAIL';
 export const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST';
 export const UPDATE_USER = 'UPDATE_USER';
+export const CLEAR_STORE = 'CLEAR_STORE';
 
 export class ClearSearch implements Action{
   readonly type = CLEAR_SEARCH;
@@ -43,4 +44,9 @@ export class SendFriendRequest implements Action{
   constructor(public payload: {email, name}) {}
 }
 
-export type SearchActions = ClearSearch | Search | UpdateUsersList | UpdateUser | SearchFail | SendFriendRequest;
+export class ClearStore implements Action{
+  readonly type = CLEAR_STORE;
+
+}
+
+export type SearchActions = ClearSearch | Search | UpdateUsersList | UpdateUser | SearchFail | SendFriendRequest | ClearStore;
