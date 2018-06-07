@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule }from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
@@ -18,11 +19,7 @@ import { MessageEffects } from './message/store/message.effects';
 
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ServerInterceptor } from './shared/server.interceptor';
 import { FriendsEffects } from './friends/store/friends.effects';
-import { SocketService } from './shared/socket.service';
 
 
 @NgModule({
@@ -33,6 +30,7 @@ import { SocketService } from './shared/socket.service';
     BrowserModule.withServerTransition({appId: 'my-app'}),
     FlexLayoutModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
     AuthModule,
     CoreModule,

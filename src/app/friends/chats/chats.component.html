@@ -1,12 +1,17 @@
 <div class="chatarea" fxLayout="column" fxLayoutGap="1vh">
-  <div class="chatmessages">
-    <p>{{messageToUser}}</p>
-    <ol>
-      <li *ngFor="let chat of (curChatList|async)" [ngStyle]="{'text-align':chat.direction==='FROM'?'right':'left'}">
-        <h4>{{userName}}:</h4>
-        <span>{{chat.content}}</span>
-      </li>
-    </ol>
+  <div class="chatmessages" #chatmessages>
+    <p class="messagetouser">{{messageToUser}}</p>
+    <mat-list>
+      <mat-list-item *ngFor="let chat of (curChatList|async)" [ngStyle]="{'text-align':chat.direction==='FROM'?'right':'left'}">
+        <h4 matLine *ngIf="chat.direction==='TO';else friendName" style="font-weight: bold">{{userName}}:</h4>
+        <ng-template #friendName>
+          <h4 matLine style="font-weight: bold">{{friendSelected.name}}:</h4>
+        </ng-template>
+        <p matLine>
+          <span>{{chat.content}}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
   </div>
   <mat-divider></mat-divider>
   <div class="chatfooter">

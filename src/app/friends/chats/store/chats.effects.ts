@@ -30,11 +30,9 @@ export class ChatsEffects{
       if (resp instanceof HttpErrorResponse){
         return of({type:ChatsActions.READ_CHAT_FAIL, payload: resp['error']});
       }
-      return of({type:ChatsActions.STORE_CHAT_ARRAY, payload: resp.chat.chatArray});
+      return of({type:ChatsActions.STORE_CHAT_ARRAY, payload: resp['chat']});
     })
-
   )
-
 
   constructor(private actions$: Actions, private httpClient: HttpClient){}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from '../models/user.model';
 
@@ -21,7 +21,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
   friendsErrorState: Observable<String>;
   private userSub: Subscription;
 
-  constructor(private store: Store<fromChats.FeatureState>, private socketService: SocketService) { }
+  prev_selected_matCard: ElementRef; //Assign with type ElementRef ok, but don't access the nativeElement
+
+  constructor(private store: Store<fromChats.FeatureState>, private socketService: SocketService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.store.dispatch(new FriendsActions.GetFriendsList());
@@ -33,8 +35,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.userSub = this.socketService.onFriendOnlineStatusChanged().subscribe(
       (friend: User)=>{
         console.log('friends online status',friend);
-        this.store.dispatch(new FriendsActions.UpdateFriendsList(friend));
+        this.store.dispatch(new FriendsActions.UpdateFriendOnlineStatus(friend));
         //friend list wont be updated if no such friend is found
+        this.store.dispatch(new ChatsActions.UpdateSelectedFriendStatus({email:friend.email,name:friend.name,online:friend.online}));
       }
     )
   }
@@ -49,8 +52,30 @@ export class FriendsComponent implements OnInit, OnDestroy {
     else return 'offline';
   }
 
-  onFriendSelected(friend: User){
+  onFriendSelected(friend: User,event){
+    console.log('selected:',event,' ',event.target);
+    const matCard = this.getToMatCardRootEle(event.target);
+    if(matCard){
+      if(this.prev_selected_matCard) this.renderer.removeStyle(this.prev_selected_matCard,'border');
+      this.renderer.setStyle(matCard,'border','.2em inset blueviolet');
+      this.prev_selected_matCard = matCard;
+    }
+
     this.store.dispatch(new ChatsActions.SelectFriend({email:friend.email,name:friend.name,online:friend.online}));
+    //---- need to update the status from NEW to READ
+    if(friend.status==='NEW') this.store.dispatch(new FriendsActions.UpdateFriendChatStatus({email:friend.email,name:friend.name,status:'READ'}));
+  }
+
+  private getToMatCardRootEle(ele){
+    let rootMatCard;
+    let max_try = 0;//i dont want this to become infinite loop! its just aesthetic fix
+    if(!ele) return;
+    while(ele.tagName!=='MAT-CARD'&&max_try<=6){
+      ele = this.renderer.parentNode(ele);
+      max_try++;
+    }
+    if (ele.tagName==='MAT-CARD') return ele;
+    else return;
   }
 
   ngOnDestroy(){

@@ -25,6 +25,15 @@ export function chatsReducer(state=initialState, action: ChatsActions.ChatsActio
         ...state,
         friendSelected: action.payload
       }
+    case(ChatsActions.UPDATE_SELECTED_FRIEND_STATUS)://only update status if this is the selected friend
+      if(!state.friendSelected||state.friendSelected.email!==action.payload.email||state.friendSelected.name!==action.payload.name)
+        return state;
+      else{
+        return{
+          ...state,
+          friendSelected: action.payload
+        }
+      }
     case(ChatsActions.STORE_CHAT_ARRAY):
       return{
         ...state,

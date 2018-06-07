@@ -10,8 +10,18 @@ const _ = require('lodash');
 
 router.get('/getallfriends',authenticate, async (req,res)=>{
   try{
-    const user = await User.findById(req.user._id).populate({path:'friends',select:'email name dob avatar online'});
-    const friends = user.friends;
+    // const user = await User.findById(req.user._id).populate({path:'friends',select:'email name dob avatar online'});
+    // const friends = user.friends;
+    //getting the user via the chat together with the chat status instead
+    const user = await User.findById(req.user._id)
+          .populate({path:'chatId', select:'status',
+            populate:{path:'friendId', select:'email name dob avatar online'}});
+    const friends = user.chatId.map(
+      (chat)=>{
+        chat.friendId.status = chat.status;
+        return chat.friendId;
+      }
+    )
 
     res.send({friends});
   }catch(e){

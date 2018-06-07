@@ -1,13 +1,20 @@
 import { Action } from "@ngrx/store";
 import { Chat } from "../../../models/chat.model";
 
-export const SELECT_FRIEND = 'SELECT_FRIEND';
+export const SELECT_FRIEND = 'SELECT_FRIEND';;
+export const UPDATE_SELECTED_FRIEND_STATUS = 'UPDATE_SELECTED_FRIEND_STATUS';
 export const STORE_CHAT_ARRAY = 'STORE_CHAT_ARRAY';
 export const UPDATE_CHAT_ARRAY = 'UPDATE_CHAT_ARRAY';
 export const READ_CHAT_FAIL = 'READ_CHAT_FAIL';
 
 export class SelectFriend implements Action{
   readonly type = SELECT_FRIEND
+
+  constructor(public payload: {email:string, name:string, online:boolean}){}
+}
+
+export class UpdateSelectedFriendStatus implements Action{
+  readonly type = UPDATE_SELECTED_FRIEND_STATUS;
 
   constructor(public payload: {email:string, name:string, online:boolean}){}
 }
@@ -30,4 +37,4 @@ export class ReadChatFail implements Action{
   constructor(public payload: string){}
 }
 
-export type ChatsActions = SelectFriend | StoreChatArray | UpdateChatArray | ReadChatFail;
+export type ChatsActions = SelectFriend | UpdateSelectedFriendStatus| StoreChatArray | UpdateChatArray | ReadChatFail;

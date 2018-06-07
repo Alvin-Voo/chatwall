@@ -5,21 +5,42 @@
 .chatmessages{
   flex-grow: 1;
   overflow-y: auto;
+  scroll-behavior: smooth;
   border: 1px solid rgba(0,0,0,0.4);
 }
 
-.chatmessages p{
+.messagetouser{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1em;
   text-align: center;
   font-size: 80%;
 }
 
-.chatmessages ol{
+/*.chatmessages ol{
   list-style-type: none;
   padding: 1vw 1vh;
+  margin: 0;
 }
 
-.chatmessages ol > li{
-  line-height: 0.1;
+.chatmessages ol > li > h4{
+  line-height: 0;
+}*/
+
+.chatmessages .mat-list{
+  padding: 1vw 1vh;
+  margin: 0;
+  height: initial;
+}
+
+.chatmessages .mat-list .mat-list-item{
+  height: initial;
+  margin: 1em auto;
+}
+
+
+.chatmessages .mat-line {
+  white-space: normal;
 }
 
 .chatfooter{

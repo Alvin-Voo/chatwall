@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
 
 import { MatButtonModule, MatDatepickerModule, MatListModule,
   MatToolbarModule, MatInputModule,
@@ -17,7 +16,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
   exports:[
     CommonModule,
     FormsModule,
-    HttpClientModule,
     FlexLayoutModule,
     MatCardModule,
     MatTabsModule,

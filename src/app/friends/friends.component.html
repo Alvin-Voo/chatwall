@@ -3,7 +3,8 @@
     <p class="error" *ngIf="friendsErrorState">{{friendsErrorState|async}}</p>
     <mat-card *ngFor="let friend of friendsListState|async"
     [ngStyle]="{'background-color':friend.online?'lightgreen':'indianred'}"
-    (click)="onFriendSelected(friend)">
+    [ngClass]="{'blink_me':friend.status==='NEW'}"
+    (click)="onFriendSelected(friend,$event)">
       <mat-card-header>
         <img mat-card-avatar alt={{friend.name}} src={{friend.avatar}}>
         <mat-card-title>{{friend.name}}</mat-card-title>

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 let chatSchema = mongoose.Schema({
   userId:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      unique: true,
       required: true
     },
   friendId:{
@@ -39,6 +39,13 @@ let chatSchema = mongoose.Schema({
     }
   ]
 });
+
+chatSchema.methods.toJSON = function(){//overwrite the toJSON method of mongoose
+  let chat = this;
+
+  return _.pick(chat, ['status','userId','friendId','chatArray']);
+  //return _.omit(user, ['password','messageId','_id','tokens'])
+}
 
 chatSchema.statics.createChat = async function(userId,friendId){
   let Chat = this;
@@ -92,7 +99,7 @@ chatSchema.statics.readAllChatsByFriend = async function(user, friend){
     }
   );
 
-  return chat;
+  return chat.chatArray;
 }
 
 module.exports = mongoose.model('Chat',chatSchema);

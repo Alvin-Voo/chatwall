@@ -99,7 +99,7 @@ let userSchema = mongoose.Schema({
 userSchema.methods.toJSON = function(){//overwrite the toJSON method of mongoose
   let user = this;
 
-  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends','friends_requests','online']);
+  return _.pick(user, ['avatar','name','email','dob','address','hobbies','friends','friends_requests','online','status']);
   //return _.omit(user, ['password','messageId','_id','tokens'])
 }
 

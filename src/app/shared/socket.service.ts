@@ -76,7 +76,8 @@ export class SocketService{
   public onNewChatMessageReceived(): Observable<Chat>{
     return new Observable<Chat>(
       observer=>{
-        this.socket.on('newChatMessageReceived',(data: Chat)=> observer.next(data));
+        this.socket.on('newChatMessageReceived',(chat: Chat)=> observer.next(chat)
+        );
       }
     )
   }

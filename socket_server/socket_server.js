@@ -93,8 +93,9 @@ class SocketServer{
       //--------------------------------------//
 
       socket.on('sendChatMessageTo', async(friend,chatItem)=>{
-        const userId = users.getUser(socket.id).getUserId();
-        let onlinefriend = users.getUserByEmailAndName(friend.email,friend.name);
+        const user = users.getUser(socket.id);
+        const userId = user.getUserId()
+        const onlinefriend = users.getUserByEmailAndName(friend.email,friend.name);
         let friendId = onlinefriend.getUserId();
 
         if(!onlinefriend){//not currently online - highly unlikely will encounter this, cuz front end will block
@@ -102,7 +103,10 @@ class SocketServer{
           friendId = friendDB._id.toHexString();
         }else{
           //send chat message to friend
-          socket.broadcast.to(onlinefriend.getSocketId()).emit('newChatMessageReceived',{...chatItem,direction:'FROM'});
+          socket.broadcast.to(onlinefriend.getSocketId()).emit(
+            'newChatMessageReceived',
+            {...chatItem,direction:'FROM',email:user.getEmail(),name:user.getName()}
+          );
         }
 
         //store message in both this user and friend's chat db
