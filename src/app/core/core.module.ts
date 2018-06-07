@@ -26,7 +26,7 @@ import { MessageEffects } from "../message/store/message.effects";
     HeaderComponent
   ],
   providers:[
-    {provide: HTTP_INTERCEPTORS, useValue: ServerInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: ServerInterceptor, multi: true },
     SocketService
   ]
 
