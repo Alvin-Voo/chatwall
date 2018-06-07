@@ -50,7 +50,8 @@
     "socket.io": "^2.1.1",
     "socketio-jwt": "^4.5.0",
     "validator": "^10.2.0",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "reflect-metadata":"0.1.12"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.3",
