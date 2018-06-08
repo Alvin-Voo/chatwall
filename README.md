@@ -35,6 +35,8 @@ Backend-
 2. Mongoose
 3. Angular universal
 4. Jsonwebtoken
+5. SocketIo
+6. SocketIo-JWT (jsonwebtoken)
 
 ## Development
 
