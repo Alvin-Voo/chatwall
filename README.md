@@ -9,6 +9,8 @@ A simple chatting app based on MEAN stack with features of:
 5. Chat with friends (individually) in 'Friends' tab
 6. All notification messages in 'Inbox' tab and all chat messages between friends in 'Friends' tab will persist (stored in MongoDB)
 
+... Check it out at https://mean-chatwall.herokuapp.com
+
 ![chatwall](https://github.com/Alvin-Voo/chatwall/blob/master/demo1.gif "chatwall")
 
 ## Features
@@ -49,8 +51,8 @@ To build for Angular Universal locally (for development):
 To build for Angular Universal for production:
 1. run 'npm run build-prod'
 2. deploy
-** Beware of setting the environment configs:
-*MONGODB_URI
-*MONGODB_DBNAME - if you are using mongodb atlas
-*JWT_SECRET
-*change your host name accordingly in the environment.prod.ts
+... ** Beware of setting the environment configs:
+... *MONGODB_URI
+... *MONGODB_DBNAME - if you are using mongodb atlas
+... *JWT_SECRET
+... *change your host name accordingly in the environment.prod.ts
