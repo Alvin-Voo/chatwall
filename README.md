@@ -1,29 +1,56 @@
 # Chatwall
 
-A simple chatting app with ability to add friends and chat to each other.
+A simple chatting app based on MEAN stack with features of:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+1. Search for friends, view their profile in 'Search' tab
+2. Send friend requests in 'Search' tab
+3. Accept/Reject friend request in 'Inbox' tab
+4. View notification message in 'Inbox' tab
+5. Chat with friends (individually) in 'Friends' tab
+6. All notification messages in 'Inbox' tab and all chat messages between friends in 'Friends' tab will persist (stored in MongoDB)
 
-## Development server
+![chatwall](https://github.com/Alvin-Voo/chatwall/blob/master/demo1.gif "chatwall")
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+This project was built using the following technologies:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Frontend-
+1. Angular 6.0
+2. Angular material
+3. Angular flexlayout
+4. NGRX 6.0 for state management
 
-## Build
+Backend-
+1. Express
+2. Mongoose
+3. Angular universal
+4. Jsonwebtoken
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Development
 
-## Running unit tests
+Prerequisites:
+1. First, make sure that angular cli 6.0 is installed globally
+2. Make sure MongoDB 3.6 and above is installed
+3. Make sure npm or yarn is installed
+4. run 'git clone https://github.com/Alvin-Voo/chatwall.git' or download my project manually from git
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To run locally:
+1. Start your local mongo db
+2. Start server - go into the project directory and run 'npm start'
+3. Start angular live development - run 'ng serve'
+4. You may view the application in http://localhost:4200
 
-## Running end-to-end tests
+To build for Angular Universal locally (for development):
+1. run 'npm run build'
+2. run 'npm start'
+3. You may view the application in http://localhost:3000
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To build for Angular Universal for production:
+1. run 'npm run build-prod'
+2. deploy
+** Beware of setting the environment configs:
+*MONGODB_URI
+*MONGODB_DBNAME - if you are using mongodb atlas
+*JWT_SECRET
+*change your host name accordingly in the environment.prod.ts
