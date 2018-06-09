@@ -6,21 +6,35 @@ A chatting app based on MEAN stack with features of:
 2. Send friend requests in 'Search' tab
 3. Accept/Reject friend request in 'Inbox' tab
 4. View notification message in 'Inbox' tab
-5. Chat with friends (individually) in 'Friends' tab
-6. All notification messages in 'Inbox' tab and all chat messages between friends in 'Friends' tab will persist (stored in MongoDB)
+5. Blinking notification in notification area for new messages in 'Inbox' tab
+6. All notification messages in 'Inbox' tab are persisted (stored in MongoDB)
+7. Friends online and offline status reflected in real time on friends (mat)card in 'Friends tab'
+8. Chat with friends (individually) in 'Friends' tab
+9. Blinking friends (mat)card for new chat messages received in 'Friends' tab
+10. All chat messages between friends in 'Friends' tab are persisted (stored in MongoDB)
 
-Check it out at https://mean-chatwall.herokuapp.com  
+Check it out at https://mean-chatwall.herokuapp.com. Be mindful that it is a bit laggy here since I'm using free tier.  
 
 This app takes the idea of being able to search for friends and send friends requests from Facebook,  
 combined with an old school style MSN chatbox  
 
+1st Demo - locally run with Angular universal (server side rendering)
+
+![chatwall-local](https://github.com/Alvin-Voo/chatwall/blob/master/demo.gif "chatwall-local")
+
+2nd Demo - on heroku. A bit laggy here.
+
 ![chatwall](https://github.com/Alvin-Voo/chatwall/blob/master/demo1.gif "chatwall")
 
-## Component interaction
+## Project overview
 
+![project_overview](https://github.com/Alvin-Voo/chatwall/blob/master/project_overview.png "project_overview")
 
+Ngrx Stores*
 
-## Features
+![ngrx_stores](https://github.com/Alvin-Voo/chatwall/blob/master/ngrx_stores.png "ngrx_stores")
+
+## Technologies
 
 This project was built using the following technologies:
 
@@ -33,7 +47,7 @@ Frontend-
 Backend-
 1. Express
 2. Mongoose
-3. Angular universal
+3. Angular universal (server side rendering)
 4. Jsonwebtoken
 5. SocketIo
 6. SocketIo-JWT (jsonwebtoken)
@@ -69,5 +83,5 @@ To build for Angular Universal for production:
 
 ## Notice
 
-I am exposing my /dist here since I am also deploying /dist/* into heroku for hosting purpose.
-Beware that running 'ng serve' will overwrite /dist/browser/*
+I am exposing my /dist here since I am also deploying /dist/* into heroku for hosting purpose.  
+Beware that running 'ng serve' will overwrite /dist/browser/*  

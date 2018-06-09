@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromMessage from './store/message.reducers';
 import * as MessageActions from './store/message.actions';
@@ -11,9 +11,10 @@ import { Observable } from 'rxjs';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
 
   messagesState: Observable<Message[]>;
+  private timeoutid: any;//should be an timeout id
 
   constructor(private store: Store<fromMessage.FeatureState>) { }
 
@@ -21,7 +22,7 @@ export class MessageComponent implements OnInit {
     console.log('message component init');
 
     this.messagesState = this.store.select('message','messages');
-    setTimeout(()=>{
+    this.timeoutid = setTimeout(()=>{
       this.store.dispatch(new MessageActions.ReadAllMessages())
     },2000);
   }
@@ -48,6 +49,10 @@ export class MessageComponent implements OnInit {
 
   onRejectFriend(msg:Message){
     this.store.dispatch(new MessageActions.RejectFriend({email:msg.from.email,name:msg.from.name}));
+  }
+
+  ngOnDestroy(){
+    if(this.timeoutid)clearTimeout(this.timeoutid);
   }
 
 }

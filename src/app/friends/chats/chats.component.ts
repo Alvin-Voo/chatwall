@@ -24,6 +24,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   friendSelected: {email:string, name:string, online:boolean};
   private friendSelectedSub: Subscription;
   private socketSub: Subscription;
+  private timeoutid: any;
 
   // getting a reference to the overall list, which is the parent container of the list items
   @ViewChild('chatmessages' ,{read: ElementRef}) chatList: ElementRef;
@@ -80,7 +81,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   private scrollToBottom(){
     //needs some delay in getting the real scroll height value
-    setTimeout(()=>{
+    if(this.timeoutid)clearTimeout(this.timeoutid);
+    this.timeoutid = setTimeout(()=>{
       const divEle : HTMLDivElement = this.chatList.nativeElement//this may crap in SSR
       console.log('chatlist change  ', divEle.scrollHeight, ' : ', divEle.scrollWidth );
       // this.getMatList.setScrollTop(realscr);
@@ -105,6 +107,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     if(this.friendSelectedSub) this.friendSelectedSub.unsubscribe();
     if(this.socketSub) this.socketSub.unsubscribe();
+    if(this.timeoutid)clearTimeout(this.timeoutid);
   }
 
 }
