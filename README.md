@@ -20,7 +20,7 @@ combined with an old school style MSN chatbox
 
 1st Demo - locally run with Angular universal (server side rendering)
 
-![chatwall-local](https://github.com/Alvin-Voo/chatwall/blob/master/demo.gif "chatwall-local")
+![chatwall-local](https://github.com/Alvin-Voo/chatwall/blob/master/demo0.gif "chatwall-local")
 
 2nd Demo - on heroku. A bit laggy here.
 
